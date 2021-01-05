@@ -3,8 +3,6 @@ import { Box } from '@chakra-ui/react';
 import SudokuField from './SudokuField';
 
 const SudokuBoard = ({ sudoku }) => {
-  console.log(sudoku);
-
   return (
     <Box>
       {sudoku.rows.map(row => (

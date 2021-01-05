@@ -19,6 +19,16 @@ const SudokuField = ({ field }) => {
     inputProps.fontWeight = 'bold';
   }
 
+  if (field.row === 2 || field.row === 5) {
+    inputProps.borderBottomColor = 'gray.600';
+    inputProps.borderBottomWidth = '5px';
+  }
+
+  if (field.col === 2 || field.col === 5) {
+    inputProps.borderRightColor = 'gray.600';
+    inputProps.borderRightWidth = '5px';
+  }
+
   return <Input {...inputProps} />;
 };
 
