@@ -3,6 +3,8 @@ import { ChakraProvider, Flex, Heading } from '@chakra-ui/react';
 
 import generateSudoku from '../utils/generateSudoku';
 
+import SudokuBoard from './SudokuBoard';
+
 const App = () => {
   const [sudoku, setSudoku] = useState({});
 
@@ -21,6 +23,7 @@ const App = () => {
         m="0 auto"
       >
         <Heading as="h1">Sweet Sudoku</Heading>
+        <SudokuBoard sudoku={sudoku} />
       </Flex>
     </ChakraProvider>
   );
