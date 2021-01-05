@@ -6,13 +6,11 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 
 const App = () => {
-  const [sudoku, setSudoku] = useState({});
+  const [sudoku, setSudoku] = useState({ rows: [] });
 
   useEffect(() => {
     setSudoku(generateSudoku());
   }, []);
-
-  console.log(sudoku);
 
   return (
     <ChakraProvider>
@@ -22,7 +20,9 @@ const App = () => {
         maxW={{ xl: '1200px' }}
         m="0 auto"
       >
-        <Heading as="h1">Sweet Sudoku</Heading>
+        <Heading as="h1" m="3vh auto">
+          Sweet Sudoku
+        </Heading>
         <SudokuBoard sudoku={sudoku} />
       </Flex>
     </ChakraProvider>
