@@ -1,4 +1,5 @@
 import { makepuzzle } from 'sudoku';
+import convertSudokuToBoard from './convertSudokuToBoard';
 
 /*
  * Generates a sudoku board with structure:
@@ -6,29 +7,14 @@ import { makepuzzle } from 'sudoku';
  */
 
 const generateSudoku = () => {
-  const raw = makepuzzle();
-  const result = { rows: [] };
+  const rawSudoku = makepuzzle();
 
-  for (let i = 0; i < 9; i++) {
-    const row = { index: i, cols: [] };
+  const board = convertSudokuToBoard(rawSudoku);
 
-    for (let j = 0; j < 9; j++) {
-      const value = raw[i * 9 + j];
-
-      const col = {
-        row: i,
-        col: j,
-        value: value,
-        readonly: value !== null,
-      };
-
-      row.cols.push(col);
-    }
-
-    result.rows.push(row);
-  }
-
-  return result;
+  return {
+    rawSudoku,
+    board,
+  };
 };
 
 export default generateSudoku;

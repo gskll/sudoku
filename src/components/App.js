@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { ChakraProvider, Flex, Heading } from '@chakra-ui/react';
 
 import generateSudoku from '../utils/generateSudoku';
+import solveSudoku from '../utils/solveSudoku';
 
 import SudokuBoard from './SudokuBoard';
 
 const App = () => {
   const [sudoku, setSudoku] = useState({ rows: [] });
+  const [solvedSudoku, setSolvedSudoku] = useState({ rows: [] });
 
   useEffect(() => {
-    setSudoku(generateSudoku());
+    const { rawSudoku, board } = generateSudoku();
+    setSudoku(board);
+    const { solvedBoard } = solveSudoku(rawSudoku);
+    setSolvedSudoku(solvedBoard);
   }, []);
 
   return (
