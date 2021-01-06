@@ -13,6 +13,7 @@ const SudokuField = ({
   updateField,
   selectedField,
   setSelectedField,
+  showSolution,
 }) => {
   const selected = selectedField === field.index;
 
@@ -49,8 +50,10 @@ const SudokuField = ({
         borderWidth={selected ? '3px' : '1px'}
         fontWeight={selected ? 'bold' : 'normal'}
         borderRadius="0.375em"
-        cursor="pointer"
-        onMouseDown={() => setSelectedField(field.index)}
+        cursor={showSolution ? 'default' : 'pointer'}
+        onMouseDown={
+          showSolution ? undefined : () => setSelectedField(field.index)
+        }
         onKeyDown={selected ? updateFieldValue : undefined}
         outline="none"
         tabIndex="0"

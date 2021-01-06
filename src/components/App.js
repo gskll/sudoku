@@ -7,7 +7,7 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 import { DownloadIcon } from '@chakra-ui/icons';
 
-// TODO: animate solution on button click
+// TODO:
 //  - add borders on correct/wrong guess
 //  - display percentage of correct guesses
 // TODO: 3 wrong guesses max option

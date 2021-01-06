@@ -56,6 +56,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     });
     setSudoku(solvedBoard);
     setBoardSolved(true);
+    setSelectedField(null);
   }
 
   return (
@@ -89,6 +90,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
               key={field.index * 2}
               selectedField={selectedField}
               setSelectedField={setSelectedField}
+              showSolution={showSolution}
             />
           </Flex>
         );
