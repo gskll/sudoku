@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 
 // TODO: add guessCertainty parameter
 //  - display uncertain toop left

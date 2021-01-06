@@ -3,9 +3,10 @@ import { Flex, Grid } from '@chakra-ui/react';
 
 import SudokuField from './SudokuField';
 
-const SudokuBoard = ({ sudokuBoard }) => {
+const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
   const [selectedField, setSelectedField] = useState(null);
+  const [boardSolved, setBoardSolved] = useState(false);
 
   ///////////////// HANDLE ALL FIELD DESELECT ON CLICK OUTSIDE BOARD
 
@@ -44,6 +45,18 @@ const SudokuBoard = ({ sudokuBoard }) => {
     );
     setSudoku(board);
   };
+
+  if (showSolution && !boardSolved) {
+    const solvedBoard = sudoku.map(field => {
+      if (field.readonly) {
+        return field;
+      }
+
+      return { ...field, lastGuess: field.value, value: field.solution };
+    });
+    setSudoku(solvedBoard);
+    setBoardSolved(true);
+  }
 
   return (
     <Grid
