@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Grid } from '@chakra-ui/react';
 
 import SudokuField from './SudokuField';
+import checkSubGridBorder from '../utils/checkSubGridBorder';
 
 // TODO: highlight relevant fields for selected field: rows, columns, 3x3
 
@@ -75,19 +76,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       {sudoku.map(field => {
         // TODO: refactor border check to util
         // TODO: refactor map render
-        const border = { border: null };
-
-        if (field.col === 2 || field.col === 5) {
-          border.borderRightColor = 'gray.300';
-          border.borderRightStyle = 'solid';
-          border.borderRightWidth = '.5vh';
-        }
-
-        if (field.row === 2 || field.row === 5) {
-          border.borderBottomColor = 'gray.300';
-          border.borderBottomStyle = 'solid';
-          border.borderBottomWidth = '.5vh';
-        }
+        const border = checkSubGridBorder(field);
 
         return (
           <Flex key={field.index} align="center" justify="center" {...border}>
