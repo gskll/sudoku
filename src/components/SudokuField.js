@@ -4,6 +4,7 @@ import { Flex } from '@chakra-ui/react';
 import highlightRelevantFields from '../utils/highlightRelevantFields';
 import setFieldBackgroundColor from '../utils/setFieldBackgroundColor';
 import setFieldBorderColor from '../utils/setFieldBorderColor';
+
 import ReadOnlyField from './ReadOnlyField';
 
 const SudokuField = ({
@@ -36,33 +37,29 @@ const SudokuField = ({
 
   const fieldBorderColor = setFieldBorderColor(field, selected, showSolution);
 
-  if (field.readonly) {
-    return (
-      <ReadOnlyField value={field.value} background={fieldBackgroundColor} />
-    );
-  } else {
-    return (
-      <Flex
-        boxSize="90%"
-        align="center"
-        justify="center"
-        bg={fieldBackgroundColor}
-        borderColor={fieldBorderColor}
-        borderWidth={selected ? '3px' : '2px'}
-        fontWeight={selected ? 'bold' : 'normal'}
-        borderRadius="0.375em"
-        cursor={showSolution ? 'default' : 'pointer'}
-        onMouseDown={
-          showSolution ? undefined : () => handleSetSelectedField(field)
-        }
-        onKeyDown={selected ? updateFieldValue : undefined}
-        outline="none"
-        tabIndex="0"
-      >
-        {field.value ? field.value : ''}
-      </Flex>
-    );
-  }
+  return field.readonly ? (
+    <ReadOnlyField value={field.value} background={fieldBackgroundColor} />
+  ) : (
+    <Flex
+      boxSize="90%"
+      justify="center"
+      align="center"
+      fontWeight={selected ? 'bold' : 'normal'}
+      background={fieldBackgroundColor}
+      borderColor={fieldBorderColor}
+      borderWidth={selected ? '3px' : '2px'}
+      borderRadius="0.375em"
+      cursor={showSolution ? 'default' : 'pointer'}
+      outline="none"
+      tabIndex={0}
+      onMouseDown={
+        showSolution ? undefined : () => handleSetSelectedField(field)
+      }
+      onKeyDown={selected ? updateFieldValue : undefined}
+    >
+      {field.value ? field.value : ''}
+    </Flex>
+  );
 };
 
 export default SudokuField;
