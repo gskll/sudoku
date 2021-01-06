@@ -4,8 +4,6 @@ import { Flex, Grid } from '@chakra-ui/react';
 import SudokuField from './SudokuField';
 import checkSubGridBorder from '../utils/checkSubGridBorder';
 
-// TODO: highlight relevant fields for selected field: rows, columns, 3x3
-
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
   const [selectedField, setSelectedField] = useState({});
@@ -64,6 +62,23 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     setSudoku(board);
   };
 
+  const renderBoardField = field => {
+    const border = checkSubGridBorder(field);
+
+    return (
+      <Flex key={field.index} align="center" justify="center" {...border}>
+        <SudokuField
+          field={field}
+          updateField={updateField}
+          key={field.index * 2}
+          selectedField={selectedField}
+          setSelectedField={setSelectedField}
+          showSolution={showSolution}
+        />
+      </Flex>
+    );
+  };
+
   return (
     <Grid
       ref={boardRef}
@@ -73,24 +88,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       m={15}
       fontSize="1.5em"
     >
-      {sudoku.map(field => {
-        // TODO: refactor border check to util
-        // TODO: refactor map render
-        const border = checkSubGridBorder(field);
-
-        return (
-          <Flex key={field.index} align="center" justify="center" {...border}>
-            <SudokuField
-              field={field}
-              updateField={updateField}
-              key={field.index * 2}
-              selectedField={selectedField}
-              setSelectedField={setSelectedField}
-              showSolution={showSolution}
-            />
-          </Flex>
-        );
-      })}
+      {sudoku.map(field => renderBoardField(field))}
     </Grid>
   );
 };
