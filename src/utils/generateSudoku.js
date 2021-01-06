@@ -24,8 +24,8 @@ const generateSudoku = () => {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       const index = i * 9 + j;
-      const value = raw[index] ? raw[index] + 1 : null;
-      const solution = solved[index] ? solved[index] + 1 : null;
+      const value = raw[index] !== null ? raw[index] + 1 : null;
+      const solution = solved[index] !== null ? solved[index] + 1 : null;
 
       const field = {
         index,
