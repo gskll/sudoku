@@ -1,15 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import highlightRelevantFields from '../utils/highlightRelevantFields';
-
-// TODO: refactor render components out
-
-// TODO: add guessCertainty parameter
-//  - display uncertain toop left
-//  - display certain normal
-//  -  change input to div
-//  - option to take notes and display in small
-//  - on select a square: highlight all would be matches
+import setFieldBackgroundColor from '../utils/setFieldBackgroundColor';
 
 const SudokuField = ({
   field,
@@ -18,10 +10,6 @@ const SudokuField = ({
   setSelectedField,
   showSolution,
 }) => {
-  if (selectedField.field) {
-    var selected = selectedField.field.index === field.index;
-  }
-
   const updateFieldValue = event => {
     const value = event.key;
     const digitRegex = /[1-9]/;
@@ -41,16 +29,10 @@ const SudokuField = ({
     setSelectedField({ field, indicesToHighlight });
   };
 
-  const setFieldBackgroundColor = () => {
-    if (
-      selectedField.field &&
-      selectedField.indicesToHighlight.includes(field.index)
-    ) {
-      return 'blue.50';
-    } else if (field.readonly) {
-      return 'gray.100';
-    }
-  };
+  if (selectedField.field) {
+    var selected = selectedField.field.index === field.index;
+  }
+  const fieldBackgroundColor = setFieldBackgroundColor(field, selectedField);
 
   const setFieldBorderColor = () => {
     if (showSolution) {
@@ -72,7 +54,7 @@ const SudokuField = ({
         boxSize="90%"
         align="center"
         justify="center"
-        bg={setFieldBackgroundColor}
+        bg={fieldBackgroundColor}
         fontWeight="bold"
         borderColor="gray.300"
         borderRadius="0.375em"
@@ -86,7 +68,7 @@ const SudokuField = ({
         boxSize="90%"
         align="center"
         justify="center"
-        bg={setFieldBackgroundColor}
+        bg={fieldBackgroundColor}
         borderColor={setFieldBorderColor}
         borderWidth={selected ? '3px' : '2px'}
         fontWeight={selected ? 'bold' : 'normal'}
