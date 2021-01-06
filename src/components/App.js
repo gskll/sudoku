@@ -7,6 +7,12 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 import { DownloadIcon } from '@chakra-ui/icons';
 
+// TODO: animate solution on button click
+//  - add borders on correct/wrong guess
+//  - display percentage of correct guesses
+// TODO: 3 wrong guesses max option
+// TODO: add difficulty parameter
+
 const App = () => {
   const [sudoku, setSudoku] = useState([]);
 
@@ -26,7 +32,7 @@ const App = () => {
         <Heading as="h1" m="3vh auto">
           Sweeeeeet Sudoku
         </Heading>
-        <SudokuBoard sudoku={sudoku} />
+        <SudokuBoard sudokuBoard={sudoku} />
         <Button
           leftIcon={<DownloadIcon />}
           colorScheme="blue"
