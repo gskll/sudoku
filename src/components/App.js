@@ -15,6 +15,7 @@ import { DownloadIcon } from '@chakra-ui/icons';
 
 const App = () => {
   const [sudoku, setSudoku] = useState([]);
+  const [showSolution, setShowSolution] = useState(false);
 
   useEffect(() => {
     setSudoku(generateSudoku());
@@ -32,11 +33,12 @@ const App = () => {
         <Heading as="h1" m="3vh auto">
           Sweeeeeet Sudoku
         </Heading>
-        <SudokuBoard sudokuBoard={sudoku} />
+        <SudokuBoard sudokuBoard={sudoku} showSolution={showSolution} />
         <Button
+          onClick={() => setShowSolution(true)}
+          disabled={showSolution}
           leftIcon={<DownloadIcon />}
           colorScheme="blue"
-          variant="solid"
           m="3vh auto"
         >
           Show Solution
