@@ -26,6 +26,20 @@ const SudokuField = ({
     }
   };
 
+  const setFieldBorderColor = () => {
+    if (showSolution) {
+      if (field.lastGuess === field.solution) {
+        return 'green.300';
+      } else {
+        return 'red.300';
+      }
+    } else if (selected) {
+      return 'blue.500';
+    } else {
+      return 'gray.300';
+    }
+  };
+
   if (field.readonly) {
     return (
       <Flex
@@ -46,8 +60,8 @@ const SudokuField = ({
         boxSize="90%"
         align="center"
         justify="center"
-        borderColor={selected ? 'blue.500' : 'gray.300'}
-        borderWidth={selected ? '3px' : '1px'}
+        borderColor={setFieldBorderColor}
+        borderWidth={selected ? '3px' : '2px'}
         fontWeight={selected ? 'bold' : 'normal'}
         borderRadius="0.375em"
         cursor={showSolution ? 'default' : 'pointer'}

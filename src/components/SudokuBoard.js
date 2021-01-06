@@ -41,7 +41,9 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
 
   const updateField = (index, updatedValue) => {
     const board = sudoku.map(field =>
-      field.index === index ? { ...field, value: updatedValue } : field
+      field.index === index
+        ? { ...field, value: parseInt(updatedValue) }
+        : field
     );
     setSudoku(board);
   };
