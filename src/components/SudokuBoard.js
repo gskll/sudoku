@@ -70,6 +70,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       templateColumns="repeat(9, 1fr)"
       templateRows="repeat(9, 1fr)"
       m={15}
+      fontSize="1.5em"
     >
       {sudoku.map(field => {
         const border = { border: null };
