@@ -3,10 +3,11 @@ import { Flex, Grid } from '@chakra-ui/react';
 
 import SudokuField from './SudokuField';
 
+// TODO: highlight relevant fields for selected field: rows, columns, 3x3
+
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
   const [selectedField, setSelectedField] = useState(null);
-  const [boardSolved, setBoardSolved] = useState(false);
 
   ///////////////// HANDLE ALL FIELD DESELECT ON CLICK OUTSIDE BOARD
 
@@ -39,6 +40,20 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
 
   useEffect(() => setSudoku(sudokuBoard), [sudokuBoard]);
 
+  useEffect(() => {
+    if (showSolution) {
+      const solvedBoard = sudoku.map(field => {
+        if (field.readonly) {
+          return field;
+        }
+
+        return { ...field, lastGuess: field.value, value: field.solution };
+      });
+      setSudoku(solvedBoard);
+      setSelectedField(null);
+    }
+  }, [showSolution]);
+
   const updateField = (index, updatedValue) => {
     const board = sudoku.map(field =>
       field.index === index
@@ -47,19 +62,6 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     );
     setSudoku(board);
   };
-
-  if (showSolution && !boardSolved) {
-    const solvedBoard = sudoku.map(field => {
-      if (field.readonly) {
-        return field;
-      }
-
-      return { ...field, lastGuess: field.value, value: field.solution };
-    });
-    setSudoku(solvedBoard);
-    setBoardSolved(true);
-    setSelectedField(null);
-  }
 
   return (
     <Grid
