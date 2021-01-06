@@ -1,5 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import highlightRelevantFields from '../utils/highlightRelevantFields';
+
+// TODO: refactor render components out
 
 // TODO: add guessCertainty parameter
 //  - display uncertain toop left
@@ -15,7 +18,9 @@ const SudokuField = ({
   setSelectedField,
   showSolution,
 }) => {
-  const selected = selectedField === field.index;
+  if (selectedField.field) {
+    var selected = selectedField.field.index === field.index;
+  }
 
   const updateFieldValue = event => {
     const value = event.key;
@@ -23,6 +28,27 @@ const SudokuField = ({
 
     if (value.match(digitRegex)) {
       updateField(field.index, value);
+    }
+  };
+
+  const handleSetSelectedField = field => {
+    const indicesToHighlight = highlightRelevantFields(
+      field.index,
+      field.row,
+      field.col
+    );
+
+    setSelectedField({ field, indicesToHighlight });
+  };
+
+  const setFieldBackgroundColor = () => {
+    if (
+      selectedField.field &&
+      selectedField.indicesToHighlight.includes(field.index)
+    ) {
+      return 'blue.50';
+    } else if (field.readonly) {
+      return 'gray.100';
     }
   };
 
@@ -46,7 +72,7 @@ const SudokuField = ({
         boxSize="90%"
         align="center"
         justify="center"
-        bg="gray.100"
+        bg={setFieldBackgroundColor}
         fontWeight="bold"
         borderColor="gray.300"
         borderRadius="0.375em"
@@ -60,13 +86,14 @@ const SudokuField = ({
         boxSize="90%"
         align="center"
         justify="center"
+        bg={setFieldBackgroundColor}
         borderColor={setFieldBorderColor}
         borderWidth={selected ? '3px' : '2px'}
         fontWeight={selected ? 'bold' : 'normal'}
         borderRadius="0.375em"
         cursor={showSolution ? 'default' : 'pointer'}
         onMouseDown={
-          showSolution ? undefined : () => setSelectedField(field.index)
+          showSolution ? undefined : () => handleSetSelectedField(field)
         }
         onKeyDown={selected ? updateFieldValue : undefined}
         outline="none"

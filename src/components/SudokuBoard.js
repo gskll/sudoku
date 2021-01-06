@@ -7,7 +7,7 @@ import SudokuField from './SudokuField';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
-  const [selectedField, setSelectedField] = useState(null);
+  const [selectedField, setSelectedField] = useState({});
 
   ///////////////// HANDLE ALL FIELD DESELECT ON CLICK OUTSIDE BOARD
 
@@ -23,7 +23,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     if (boardRef.current && boardRef.current.contains(event.target)) {
       return;
     }
-    setSelectedField(null);
+    setSelectedField({});
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
         return { ...field, lastGuess: field.value, value: field.solution };
       });
       setSudoku(solvedBoard);
-      setSelectedField(null);
+      setSelectedField({});
     }
   }, [showSolution]);
 
@@ -73,6 +73,8 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       fontSize="1.5em"
     >
       {sudoku.map(field => {
+        // TODO: refactor border check to util
+        // TODO: refactor map render
         const border = { border: null };
 
         if (field.col === 2 || field.col === 5) {
