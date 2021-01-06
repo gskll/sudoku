@@ -2,24 +2,33 @@ import { makepuzzle, solvepuzzle } from 'sudoku';
 
 /*
  * Generates a sudoku board with structure:
- * {rows: [{index: 0, cols: [{row: 0, col: 0, value: 1, readonly: true, solution: 1}, ...]}, ...]}
+ *  [
+ *    {
+ *      index: int:[0-80],
+ *      row: int:[0-8],
+ *      col: int:[0-8],
+ *      value: int:[0-8],
+ *      readonly: bool,
+ *      solution: int:[0-8]
+ *    },
+ *    ...
+ *  ]
  */
 
 const generateSudoku = () => {
   const raw = makepuzzle();
   const solved = solvepuzzle(raw);
 
-  const board = { rows: [] };
+  const board = [];
 
   for (let i = 0; i < 9; i++) {
-    const row = { index: i, cols: [] };
-
     for (let j = 0; j < 9; j++) {
       const index = i * 9 + j;
       const value = raw[index];
       const solution = solved[index];
 
-      const col = {
+      const field = {
+        index,
         row: i,
         col: j,
         value,
@@ -27,10 +36,8 @@ const generateSudoku = () => {
         readonly: value !== null,
       };
 
-      row.cols.push(col);
+      board.push(field);
     }
-
-    board.rows.push(row);
   }
 
   return board;
