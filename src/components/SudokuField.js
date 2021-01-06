@@ -4,6 +4,7 @@ import { Flex } from '@chakra-ui/react';
 import highlightRelevantFields from '../utils/highlightRelevantFields';
 import setFieldBackgroundColor from '../utils/setFieldBackgroundColor';
 import setFieldBorderColor from '../utils/setFieldBorderColor';
+import ReadOnlyField from './ReadOnlyField';
 
 const SudokuField = ({
   field,
@@ -21,12 +22,8 @@ const SudokuField = ({
     }
   };
 
-  const handleSetSelectedField = field => {
-    const indicesToHighlight = highlightRelevantFields(
-      field.index,
-      field.row,
-      field.col
-    );
+  const handleSetSelectedField = ({ index, row, col }) => {
+    const indicesToHighlight = highlightRelevantFields(index, row, col);
 
     setSelectedField({ field, indicesToHighlight });
   };
@@ -34,23 +31,14 @@ const SudokuField = ({
   if (selectedField.field) {
     var selected = selectedField.field.index === field.index;
   }
+
   const fieldBackgroundColor = setFieldBackgroundColor(field, selectedField);
 
   const fieldBorderColor = setFieldBorderColor(field, selected, showSolution);
 
   if (field.readonly) {
     return (
-      <Flex
-        boxSize="90%"
-        align="center"
-        justify="center"
-        bg={fieldBackgroundColor}
-        fontWeight="bold"
-        borderColor="gray.300"
-        borderRadius="0.375em"
-      >
-        {field.value}
-      </Flex>
+      <ReadOnlyField value={field.value} background={fieldBackgroundColor} />
     );
   } else {
     return (
