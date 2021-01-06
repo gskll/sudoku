@@ -13,13 +13,10 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 import { DownloadIcon, RepeatIcon } from '@chakra-ui/icons';
 
-// TODO:
-//  - display percentage of correct guesses
-//  - play again  button
+// TODO: display percentage of correct guesses
 // TODO: 3 wrong guesses max option
 // TODO: add difficulty parameter
 // TODO: check correctness of each move
-// TODO: check if board won
 
 const App = () => {
   const [sudoku, setSudoku] = useState([]);

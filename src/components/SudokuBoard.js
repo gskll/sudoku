@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Grid } from '@chakra-ui/react';
 
-import SudokuField from './SudokuField';
 import checkSubGridBorder from '../utils/checkSubGridBorder';
+import checkSolvedBoard from '../utils/checkSolvedBoard';
+
+import SudokuField from './SudokuField';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
@@ -41,17 +43,22 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
 
   useEffect(() => {
     if (showSolution) {
-      const solvedBoard = sudoku.map(field => {
-        if (field.readonly) {
-          return field;
-        }
-
-        return { ...field, lastGuess: field.value, value: field.solution };
-      });
-      setSudoku(solvedBoard);
-      setSelectedField({});
+      handleBoardSolved();
     }
   }, [showSolution]);
+
+  const handleBoardSolved = () => {
+    const solvedBoard = sudoku.map(field => {
+      if (field.readonly) {
+        return field;
+      }
+
+      return { ...field, lastGuess: field.value, value: field.solution };
+    });
+
+    setSudoku(solvedBoard);
+    setSelectedField({});
+  };
 
   const updateField = (index, updatedValue) => {
     const board = sudoku.map(field =>
@@ -59,7 +66,10 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
         ? { ...field, value: parseInt(updatedValue) }
         : field
     );
-    setSudoku(board);
+
+    const solved = checkSolvedBoard(board);
+
+    solved ? handleBoardSolved() : setSudoku(board);
   };
 
   const renderBoardField = field => {
