@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-import { Button, ChakraProvider, Flex, Heading } from '@chakra-ui/react';
+import {
+  Button,
+  ButtonGroup,
+  ChakraProvider,
+  Flex,
+  Heading,
+} from '@chakra-ui/react';
 
 import generateSudoku from '../utils/generateSudoku';
 
 import SudokuBoard from './SudokuBoard';
-import { DownloadIcon } from '@chakra-ui/icons';
+import { DownloadIcon, RepeatIcon } from '@chakra-ui/icons';
 
 // TODO:
-//  - add borders on correct/wrong guess
 //  - display percentage of correct guesses
+//  - play again  button
 // TODO: 3 wrong guesses max option
 // TODO: add difficulty parameter
+// TODO: check correctness of each move
+// TODO: check if board won
 
 const App = () => {
   const [sudoku, setSudoku] = useState([]);
@@ -20,6 +28,11 @@ const App = () => {
   useEffect(() => {
     setSudoku(generateSudoku());
   }, []);
+
+  const resetNewBoard = () => {
+    setSudoku(generateSudoku());
+    setShowSolution(false);
+  };
 
   return (
     <ChakraProvider>
@@ -34,15 +47,24 @@ const App = () => {
           Sweeeeeet Sudoku
         </Heading>
         <SudokuBoard sudokuBoard={sudoku} showSolution={showSolution} />
-        <Button
-          onClick={() => setShowSolution(true)}
-          disabled={showSolution}
-          leftIcon={<DownloadIcon />}
-          colorScheme="blue"
-          m="3vh auto"
-        >
-          Show Solution
-        </Button>
+        <ButtonGroup spacing="6" m="3vh auto">
+          <Button
+            onClick={() => setShowSolution(true)}
+            disabled={showSolution}
+            leftIcon={<DownloadIcon />}
+            colorScheme="blue"
+          >
+            Show Solution
+          </Button>
+          <Button
+            onClick={resetNewBoard}
+            leftIcon={<RepeatIcon />}
+            colorScheme="blue"
+            variant="outline"
+          >
+            Play Again
+          </Button>
+        </ButtonGroup>
       </Flex>
     </ChakraProvider>
   );
