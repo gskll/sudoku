@@ -5,6 +5,7 @@ import SudokuField from './SudokuField';
 
 const SudokuBoard = ({ sudokuBoard }) => {
   const [sudoku, setSudoku] = useState([]);
+  const [selectedField, setSelectedField] = useState(null);
 
   useEffect(() => setSudoku(sudokuBoard), [sudokuBoard]);
 
@@ -43,6 +44,8 @@ const SudokuBoard = ({ sudokuBoard }) => {
               field={field}
               updateField={updateField}
               key={field.index * 2}
+              selectedField={selectedField}
+              setSelectedField={setSelectedField}
             />
           </Flex>
         );

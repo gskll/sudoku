@@ -8,18 +8,13 @@ import React, { useState } from 'react';
 //  - option to take notes and display in small
 //  - on select a square: highlight all would be matches
 
-const SudokuField = ({ field, updateField }) => {
-  const [selected, setSelected] = useState(false);
-
-  const selectField = () => {
-    // Add Focus border
-    setSelected(true);
-    // Add event listener for keypress
-    // Validate keypress
-    // Update field value
-    // Change selected to false
-    return;
-  };
+const SudokuField = ({
+  field,
+  updateField,
+  selectedField,
+  setSelectedField,
+}) => {
+  const selected = selectedField === field.index;
 
   const updateFieldValue = event => {
     const value = event.key;
@@ -50,11 +45,12 @@ const SudokuField = ({ field, updateField }) => {
         boxSize="90%"
         align="center"
         justify="center"
-        borderColor="gray.300"
+        borderColor={selected ? 'blue.500' : 'gray.300'}
         borderWidth={selected ? '3px' : '1px'}
+        fontWeight={selected ? 'bold' : 'normal'}
         borderRadius="0.375em"
         cursor="pointer"
-        onMouseDown={selectField}
+        onMouseDown={() => setSelectedField(field.index)}
         onKeyDown={selected ? updateFieldValue : undefined}
         outline="none"
         tabIndex="0"
