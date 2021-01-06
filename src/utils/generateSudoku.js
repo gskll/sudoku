@@ -7,9 +7,9 @@ import { makepuzzle, solvepuzzle } from 'sudoku';
  *      index: int:[0-80],
  *      row: int:[0-8],
  *      col: int:[0-8],
- *      value: int:[0-8],
+ *      value: int:[1-9],
  *      readonly: bool,
- *      solution: int:[0-8]
+ *      solution: int:[1-9]
  *    },
  *    ...
  *  ]
@@ -24,8 +24,8 @@ const generateSudoku = () => {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       const index = i * 9 + j;
-      const value = raw[index];
-      const solution = solved[index];
+      const value = raw[index] ? raw[index] + 1 : null;
+      const solution = solved[index] ? solved[index] + 1 : null;
 
       const field = {
         index,
