@@ -54,14 +54,19 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   }, [showSolution]);
 
   const handleBoardSolved = () => {
+    const tempBoardMap = sudokuMap;
+
     const solvedBoard = sudoku.map(field => {
       if (field.readonly) {
         return field;
       }
 
+      const mapKey = parseInt(field.solution);
+      tempBoardMap[mapKey].push(field.index);
       return { ...field, value: field.solution, readonly: true };
     });
 
+    setSudokuMap(tempBoardMap);
     setSudoku(solvedBoard);
     setSelectedField({});
   };
