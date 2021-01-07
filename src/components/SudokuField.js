@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 
 import highlightRelevantFields from '../utils/highlightRelevantFields';
-import setFieldBackgroundColor from '../utils/setFieldBackgroundColor';
-import setFieldBorderColor from '../utils/setFieldBorderColor';
+import setFieldStyles from '../utils/setFieldStyles';
 
 // TODO: update boardMapping with correct guess
 // TODO: update readonly status on solvedBoard and edit render
@@ -75,21 +74,11 @@ const SudokuField = ({
     var selected = selectedField.field.index === field.index;
   }
 
-  let fieldBackgroundColor;
-  let fieldBorderColor;
+  let fieldStyles;
 
-  if (selected && fieldFlash) {
-    fieldBackgroundColor = fieldFlash.bg;
-    fieldBorderColor = fieldFlash.border;
-  } else {
-    fieldBackgroundColor = setFieldBackgroundColor(field, selectedField);
-
-    fieldBorderColor = setFieldBorderColor(
-      field,
-      selected,
-      showSolution,
-      selectedField
-    );
+  if (!fieldFlash) {
+    const styleParams = { field, selected, selectedField };
+    fieldStyles = setFieldStyles(styleParams);
   }
 
   return (
@@ -97,10 +86,9 @@ const SudokuField = ({
       boxSize="90%"
       justify="center"
       align="center"
-      color={field.given ? 'black' : 'blue.700'}
       fontWeight="bold"
-      background={fieldBackgroundColor}
-      borderColor={fieldBorderColor}
+      background={fieldFlash ? fieldFlash.bg : fieldStyles.bg}
+      borderColor={fieldFlash ? fieldFlash.border : fieldStyles.border}
       borderWidth={selected ? '3px' : '2px'}
       borderRadius="0.375em"
       cursor={showSolution ? 'default' : 'pointer'}
