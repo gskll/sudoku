@@ -58,7 +58,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
         return field;
       }
 
-      return { ...field, value: field.solution };
+      return { ...field, value: field.solution, readonly: true };
     });
 
     setSudoku(solvedBoard);
@@ -76,8 +76,6 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       sameDigitIndicesToHighlight,
     });
   };
-
-  useEffect(() => console.log('board rerendering'));
 
   const updateField = (index, updatedValue) => {
     updatedValue = parseInt(updatedValue);

@@ -3,11 +3,6 @@ import { Flex } from '@chakra-ui/react';
 
 import setFieldStyles from '../utils/setFieldStyles';
 
-// TODO: update boardMapping with correct guess
-// TODO: update readonly status on solvedBoard and edit render
-// TODO: change color of selected bg
-// TODO: refactor border/bg styles to one function
-
 const FLASH_TIMER = 800;
 
 const SudokuField = ({
@@ -78,12 +73,10 @@ const SudokuField = ({
       borderColor={fieldFlash ? fieldFlash.border : fieldStyles.border}
       borderWidth={selected ? '3px' : '2px'}
       borderRadius="0.375em"
-      cursor={showSolution ? 'default' : 'pointer'}
+      cursor="pointer"
       outline="none"
       tabIndex={0}
-      onMouseDown={
-        showSolution ? undefined : () => handleSetSelectedField(field)
-      }
+      onMouseDown={() => handleSetSelectedField(field)}
       onKeyDown={
         !field.readonly && fieldEditable && selected
           ? updateDisplayValue
