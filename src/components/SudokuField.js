@@ -22,21 +22,16 @@ const SudokuField = ({
 }) => {
   const [displayValue, setDisplayValue] = useState(field.value);
 
-  const updateFieldValue = event => {
-    const value = event.key;
-    const digitRegex = /[1-9]/;
-
-    if (value.match(digitRegex) && field.solution === parseInt(value)) {
-      // updateField(field.index, value);
-    }
-  };
-
   const updateDisplayValue = event => {
     const value = event.key;
     const validValue = /[1-9]/;
 
     if (value.match(validValue)) {
       setDisplayValue(value);
+
+      if (field.solution === parseInt(value)) {
+        updateField(field.index, value);
+      }
     }
   };
 
