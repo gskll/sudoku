@@ -13,21 +13,22 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 import { DownloadIcon, RepeatIcon } from '@chakra-ui/icons';
 
-// TODO: display percentage of correct guesses
 // TODO: 3 wrong guesses max option
 // TODO: add difficulty parameter
 // TODO: check correctness of each move
+// TODO: add modal instruction on first visit
+// TODO: save user stats in session
 
 const App = () => {
-  const [sudoku, setSudoku] = useState([]);
+  const [sudokuBoard, setSudokuBoard] = useState({});
   const [showSolution, setShowSolution] = useState(false);
 
   useEffect(() => {
-    setSudoku(generateSudoku());
+    setSudokuBoard(generateSudoku());
   }, []);
 
   const resetNewBoard = () => {
-    setSudoku(generateSudoku());
+    setSudokuBoard(generateSudoku());
     setShowSolution(false);
   };
 
@@ -43,7 +44,7 @@ const App = () => {
         <Heading as="h1" m="3vh auto">
           Sweeeeeet Sudoku
         </Heading>
-        <SudokuBoard sudokuBoard={sudoku} showSolution={showSolution} />
+        <SudokuBoard sudokuBoard={sudokuBoard} showSolution={showSolution} />
         <ButtonGroup spacing="6" m="3vh auto">
           <Button
             onClick={() => setShowSolution(true)}

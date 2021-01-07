@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Flex, Grid } from '@chakra-ui/react';
+import { Flex, Grid, Spinner } from '@chakra-ui/react';
 
 import checkSubGridBorder from '../utils/checkSubGridBorder';
 import checkSolvedBoard from '../utils/checkSolvedBoard';
@@ -8,6 +8,7 @@ import SudokuField from './SudokuField';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
+  const [sudokuMap, setSudokuMap] = useState({});
   const [selectedField, setSelectedField] = useState({});
 
   ///////////////// HANDLE ALL FIELD DESELECT ON CLICK OUTSIDE BOARD
@@ -39,7 +40,10 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
 
   /////////////// END OF DESELECT ON OUTSIDE BOARD CLICK HANDLING
 
-  useEffect(() => setSudoku(sudokuBoard), [sudokuBoard]);
+  useEffect(() => {
+    setSudoku(sudokuBoard.board);
+    setSudokuMap(sudokuBoard.boardMapping);
+  }, [sudokuBoard]);
 
   useEffect(() => {
     if (showSolution) {
@@ -79,6 +83,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       <Flex key={field.index} align="center" justify="center" {...border}>
         <SudokuField
           field={field}
+          sudokuMap={sudokuMap}
           updateField={updateField}
           key={field.index * 2}
           selectedField={selectedField}
@@ -88,6 +93,18 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       </Flex>
     );
   };
+
+  if (!sudoku) {
+    return (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    );
+  }
 
   return (
     <Grid
