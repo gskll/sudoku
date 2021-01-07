@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 
 import highlightRelevantFields from '../utils/highlightRelevantFields';
 import setFieldBackgroundColor from '../utils/setFieldBackgroundColor';
 import setFieldBorderColor from '../utils/setFieldBorderColor';
 
-// TODO: move field value state to SudokuField to flash incorrect, validate
-// then clear or not. Once validated, pass up to Board
-// TODO: flash green / red border on correct / incorrect guess
-// TODO: once correct guess, set to readonly / unchangeable
 // TODO: update boardMapping with correct guess
-// TODO: update sameDigit highlighting on correct guess
+// TODO: update readonly status on solvedBoard and edit render
+// TODO: change color of selected bg
+// TODO: refactor border/bg styles to one function
 
 const FLASH_TIMER = 800;
 
@@ -22,8 +20,12 @@ const SudokuField = ({
   showSolution,
   sudokuMap,
 }) => {
-  const [displayValue, setDisplayValue] = useState(field.value);
+  const [displayValue, setDisplayValue] = useState(null);
   const [fieldFlash, setFieldFlash] = useState(null);
+
+  useEffect(() => {
+    setDisplayValue(field.value);
+  }, [field.value]);
 
   const updateDisplayValue = event => {
     const value = event.key;
@@ -65,7 +67,6 @@ const SudokuField = ({
   let fieldBorderColor;
 
   if (selected && fieldFlash) {
-    console.log('here');
     fieldBackgroundColor = fieldFlash.bg;
     fieldBorderColor = fieldFlash.border;
   } else {

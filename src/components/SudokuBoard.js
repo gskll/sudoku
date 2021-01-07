@@ -39,7 +39,6 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   }, []);
 
   /////////////// END OF DESELECT ON OUTSIDE BOARD CLICK HANDLING
-  console.clear();
 
   useEffect(() => {
     setSudoku(sudokuBoard.board);
@@ -58,7 +57,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
         return field;
       }
 
-      return { ...field, lastGuess: field.value, value: field.solution };
+      return { ...field, value: field.solution };
     });
 
     setSudoku(solvedBoard);
