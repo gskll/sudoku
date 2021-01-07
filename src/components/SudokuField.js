@@ -17,6 +17,7 @@ const SudokuField = ({
   selectedField,
   setSelectedField,
   showSolution,
+  sudokuMap,
 }) => {
   const updateFieldValue = event => {
     const value = event.key;
@@ -27,10 +28,15 @@ const SudokuField = ({
     }
   };
 
-  const handleSetSelectedField = ({ index, row, col }) => {
-    const indicesToHighlight = highlightRelevantFields(index, row, col);
+  const handleSetSelectedField = ({ index, row, col, value }) => {
+    const gridIndicesToHighlight = highlightRelevantFields(index, row, col);
+    const sameDigitIndicesToHighlight = sudokuMap[parseInt(value)];
 
-    setSelectedField({ field, indicesToHighlight });
+    setSelectedField({
+      field,
+      gridIndicesToHighlight,
+      sameDigitIndicesToHighlight,
+    });
   };
 
   if (selectedField.field) {
@@ -39,19 +45,26 @@ const SudokuField = ({
 
   const fieldBackgroundColor = setFieldBackgroundColor(field, selectedField);
 
-  const fieldBorderColor = setFieldBorderColor(field, selected, showSolution);
+  const fieldBorderColor = setFieldBorderColor(
+    field,
+    selected,
+    showSolution,
+    selectedField
+  );
 
   return field.readonly ? (
     <ReadOnlyField
       value={field.value}
       setSelectedField={setSelectedField}
       background={fieldBackgroundColor}
+      borderColor={fieldBorderColor}
     />
   ) : (
     <Flex
       boxSize="90%"
       justify="center"
       align="center"
+      color="blue.900"
       fontWeight={selected ? 'bold' : 'normal'}
       background={fieldBackgroundColor}
       borderColor={fieldBorderColor}
