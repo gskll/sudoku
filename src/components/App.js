@@ -14,6 +14,7 @@ import SudokuBoard from './SudokuBoard';
 import { DownloadIcon, RepeatIcon } from '@chakra-ui/icons';
 
 // TODO: refactor to use useEffect where appropriate
+// TODO: refactor Chakra style components into separate components
 // TODO: refactor app buttons
 
 const App = () => {

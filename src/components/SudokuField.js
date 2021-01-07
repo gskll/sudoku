@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 
 import setFieldStyles from '../utils/setFieldStyles';
 
@@ -10,7 +10,8 @@ const SudokuField = ({
   updateField,
   selectedField,
   handleSetSelectedField,
-  showSolution,
+  notEditableErrorShown,
+  setNotEditableErrorShown,
 }) => {
   const [displayValue, setDisplayValue] = useState(null);
   const [fieldFlash, setFieldFlash] = useState(null);
@@ -56,6 +57,23 @@ const SudokuField = ({
     var selected = selectedField.field.index === field.index;
   }
 
+  const toast = useToast();
+  const handleNotEditable = () => {
+    if (notEditableErrorShown) {
+      return;
+    }
+
+    setNotEditableErrorShown(true);
+
+    return toast({
+      title: 'Field completed',
+      description: "You can't edit a completed field",
+      status: 'error',
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   let fieldStyles;
 
   if (!fieldFlash) {
@@ -80,9 +98,7 @@ const SudokuField = ({
       onKeyDown={
         !field.readonly && fieldEditable && selected
           ? updateDisplayValue
-          : () => {
-              console.log("can't edit readonly");
-            }
+          : handleNotEditable
       }
     >
       {displayValue ? displayValue : ''}

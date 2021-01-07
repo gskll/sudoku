@@ -3,14 +3,15 @@ import { Flex, Grid, Spinner } from '@chakra-ui/react';
 
 import checkSubGridBorder from '../utils/checkSubGridBorder';
 import checkSolvedBoard from '../utils/checkSolvedBoard';
+import highlightRelevantFields from '../utils/highlightRelevantFields';
 
 import SudokuField from './SudokuField';
-import highlightRelevantFields from '../utils/highlightRelevantFields';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
   const [sudokuMap, setSudokuMap] = useState({});
   const [selectedField, setSelectedField] = useState({});
+  const [notEditableErrorShown, setNotEditableErrorShown] = useState(false);
 
   ///////////////// HANDLE ALL FIELD DESELECT ON CLICK OUTSIDE BOARD
 
@@ -108,7 +109,8 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
           key={field.index * 2}
           selectedField={selectedField}
           handleSetSelectedField={handleSetSelectedField}
-          showSolution={showSolution}
+          notEditableErrorShown={notEditableErrorShown}
+          setNotEditableErrorShown={setNotEditableErrorShown}
         />
       </Flex>
     );
