@@ -22,10 +22,34 @@ const SudokuField = ({
 }) => {
   const [displayValue, setDisplayValue] = useState(null);
   const [fieldFlash, setFieldFlash] = useState(null);
+  const [fieldEditable, setFieldEditable] = useState(true);
 
   useEffect(() => {
     setDisplayValue(field.value);
   }, [field.value]);
+
+  useEffect(() => {
+    if (field.readonly || !displayValue) {
+      return;
+    }
+    setFieldEditable(false);
+
+    if (field.solution === parseInt(displayValue)) {
+      setFieldFlash({ border: 'green.300', bg: 'green.100' });
+      updateField(field.index, displayValue);
+      setTimeout(() => {
+        setFieldFlash(null);
+        setFieldEditable(true);
+      }, FLASH_TIMER);
+    } else {
+      setFieldFlash({ border: 'red.300', bg: 'red.100' });
+      setTimeout(() => {
+        setFieldFlash(null);
+        setDisplayValue(null);
+        setFieldEditable(true);
+      }, FLASH_TIMER);
+    }
+  }, [displayValue]);
 
   const updateDisplayValue = event => {
     const value = event.key;
@@ -33,18 +57,6 @@ const SudokuField = ({
 
     if (value.match(validValue)) {
       setDisplayValue(value);
-
-      if (field.solution === parseInt(value)) {
-        setFieldFlash({ border: 'green.300', bg: 'green.100' });
-        updateField(field.index, value);
-        setTimeout(() => setFieldFlash(null), FLASH_TIMER);
-      } else {
-        setFieldFlash({ border: 'red.300', bg: 'red.100' });
-        setTimeout(() => {
-          setFieldFlash(null);
-          setDisplayValue(null);
-        }, FLASH_TIMER);
-      }
     }
   };
 
@@ -98,7 +110,7 @@ const SudokuField = ({
         showSolution ? undefined : () => handleSetSelectedField(field)
       }
       onKeyDown={
-        !field.readonly && selected
+        !field.readonly && fieldEditable && selected
           ? updateDisplayValue
           : () => {
               console.log("can't edit readonly");
