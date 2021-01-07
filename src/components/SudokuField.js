@@ -12,6 +12,8 @@ import setFieldBorderColor from '../utils/setFieldBorderColor';
 // TODO: update boardMapping with correct guess
 // TODO: update sameDigit highlighting on correct guess
 
+const FLASH_TIMER = 800;
+
 const SudokuField = ({
   field,
   updateField,
@@ -21,6 +23,7 @@ const SudokuField = ({
   sudokuMap,
 }) => {
   const [displayValue, setDisplayValue] = useState(field.value);
+  const [fieldFlash, setFieldFlash] = useState(null);
 
   const updateDisplayValue = event => {
     const value = event.key;
@@ -30,7 +33,15 @@ const SudokuField = ({
       setDisplayValue(value);
 
       if (field.solution === parseInt(value)) {
+        setFieldFlash({ border: 'green.300', bg: 'green.100' });
         updateField(field.index, value);
+        setTimeout(() => setFieldFlash(null), FLASH_TIMER);
+      } else {
+        setFieldFlash({ border: 'red.300', bg: 'red.100' });
+        setTimeout(() => {
+          setFieldFlash(null);
+          setDisplayValue(null);
+        }, FLASH_TIMER);
       }
     }
   };
@@ -50,14 +61,23 @@ const SudokuField = ({
     var selected = selectedField.field.index === field.index;
   }
 
-  const fieldBackgroundColor = setFieldBackgroundColor(field, selectedField);
+  let fieldBackgroundColor;
+  let fieldBorderColor;
 
-  const fieldBorderColor = setFieldBorderColor(
-    field,
-    selected,
-    showSolution,
-    selectedField
-  );
+  if (selected && fieldFlash) {
+    console.log('here');
+    fieldBackgroundColor = fieldFlash.bg;
+    fieldBorderColor = fieldFlash.border;
+  } else {
+    fieldBackgroundColor = setFieldBackgroundColor(field, selectedField);
+
+    fieldBorderColor = setFieldBorderColor(
+      field,
+      selected,
+      showSolution,
+      selectedField
+    );
+  }
 
   return (
     <Flex
