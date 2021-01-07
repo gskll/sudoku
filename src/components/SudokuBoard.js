@@ -78,6 +78,17 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     });
   };
 
+  const handleMapUpdate = (index, value) => {
+    value = parseInt(value);
+
+    const map = {
+      ...sudokuMap,
+      [value]: [...sudokuMap[value], index],
+    };
+
+    setSudokuMap(map);
+  };
+
   const updateField = (index, updatedValue) => {
     updatedValue = parseInt(updatedValue);
     const board = sudoku.map(field =>
@@ -86,12 +97,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
         : field
     );
 
-    const map = {
-      ...sudokuMap,
-      [updatedValue]: [...sudokuMap[updatedValue], index],
-    };
-
-    setSudokuMap(map);
+    handleMapUpdate(index, updatedValue);
     handleSetSelectedField(board[index]);
     const solved = checkSolvedBoard(board);
 
