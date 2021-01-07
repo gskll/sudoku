@@ -2,17 +2,24 @@ import { makepuzzle, solvepuzzle } from 'sudoku';
 
 /*
  * Generates a sudoku board with structure:
- *  [
- *    {
- *      index: int:[0-80],
- *      row: int:[0-8],
- *      col: int:[0-8],
- *      value: int:[1-9],
- *      readonly: bool,
- *      solution: int:[1-9]
- *    },
- *    ...
- *  ]
+ *  {
+ *    board: [
+ *        {
+ *          index: int:[0-80],
+ *          row: int:[0-8],
+ *          col: int:[0-8],
+ *          value: int:[1-9],
+ *          readonly: bool,
+ *          solution: int:[1-9]
+ *        },
+ *        ...
+ *   ],
+ *   boardMapping: {
+ *     1 : [indices],
+ *     2 : [indices],
+ *     ...
+ *   }
+ *  }
  */
 
 const generateSudoku = () => {

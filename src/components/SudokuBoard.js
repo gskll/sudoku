@@ -65,12 +65,19 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   };
 
   const updateField = (index, updatedValue) => {
+    updatedValue = parseInt(updatedValue);
     const board = sudoku.map(field =>
       field.index === index
-        ? { ...field, value: parseInt(updatedValue), readonly: true }
+        ? { ...field, value: updatedValue, readonly: true }
         : field
     );
 
+    const map = {
+      ...sudokuMap,
+      [updatedValue]: [...sudokuMap[updatedValue], index],
+    };
+
+    setSudokuMap(map);
     const solved = checkSolvedBoard(board);
 
     solved ? handleBoardSolved() : setSudoku(board);
