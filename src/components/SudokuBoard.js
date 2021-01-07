@@ -5,6 +5,7 @@ import checkSubGridBorder from '../utils/checkSubGridBorder';
 import checkSolvedBoard from '../utils/checkSolvedBoard';
 
 import SudokuField from './SudokuField';
+import highlightRelevantFields from '../utils/highlightRelevantFields';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [sudoku, setSudoku] = useState([]);
@@ -64,6 +65,20 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     setSelectedField({});
   };
 
+  const handleSetSelectedField = field => {
+    const { index, row, col, value } = field;
+    const gridIndicesToHighlight = highlightRelevantFields(index, row, col);
+    const sameDigitIndicesToHighlight = sudokuMap[parseInt(value)];
+
+    setSelectedField({
+      field,
+      gridIndicesToHighlight,
+      sameDigitIndicesToHighlight,
+    });
+  };
+
+  useEffect(() => console.log('board rerendering'));
+
   const updateField = (index, updatedValue) => {
     updatedValue = parseInt(updatedValue);
     const board = sudoku.map(field =>
@@ -78,6 +93,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     };
 
     setSudokuMap(map);
+    handleSetSelectedField(board[index]);
     const solved = checkSolvedBoard(board);
 
     solved ? handleBoardSolved() : setSudoku(board);
@@ -90,11 +106,10 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
       <Flex key={field.index} align="center" justify="center" {...border}>
         <SudokuField
           field={field}
-          sudokuMap={sudokuMap}
           updateField={updateField}
           key={field.index * 2}
           selectedField={selectedField}
-          setSelectedField={setSelectedField}
+          handleSetSelectedField={handleSetSelectedField}
           showSolution={showSolution}
         />
       </Flex>

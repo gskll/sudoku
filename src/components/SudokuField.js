@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 
-import highlightRelevantFields from '../utils/highlightRelevantFields';
 import setFieldStyles from '../utils/setFieldStyles';
 
 // TODO: update boardMapping with correct guess
@@ -15,9 +14,8 @@ const SudokuField = ({
   field,
   updateField,
   selectedField,
-  setSelectedField,
+  handleSetSelectedField,
   showSolution,
-  sudokuMap,
 }) => {
   const [displayValue, setDisplayValue] = useState(null);
   const [fieldFlash, setFieldFlash] = useState(null);
@@ -57,17 +55,6 @@ const SudokuField = ({
     if (value.match(validValue)) {
       setDisplayValue(value);
     }
-  };
-
-  const handleSetSelectedField = ({ index, row, col, value }) => {
-    const gridIndicesToHighlight = highlightRelevantFields(index, row, col);
-    const sameDigitIndicesToHighlight = sudokuMap[parseInt(value)];
-
-    setSelectedField({
-      field,
-      gridIndicesToHighlight,
-      sameDigitIndicesToHighlight,
-    });
   };
 
   if (selectedField.field) {
