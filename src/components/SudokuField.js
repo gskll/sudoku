@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 
 import highlightRelevantFields from '../utils/highlightRelevantFields';
@@ -20,12 +20,23 @@ const SudokuField = ({
   showSolution,
   sudokuMap,
 }) => {
+  const [displayValue, setDisplayValue] = useState(field.value);
+
   const updateFieldValue = event => {
     const value = event.key;
     const digitRegex = /[1-9]/;
 
     if (value.match(digitRegex) && field.solution === parseInt(value)) {
-      updateField(field.index, value);
+      // updateField(field.index, value);
+    }
+  };
+
+  const updateDisplayValue = event => {
+    const value = event.key;
+    const validValue = /[1-9]/;
+
+    if (value.match(validValue)) {
+      setDisplayValue(value);
     }
   };
 
@@ -72,13 +83,13 @@ const SudokuField = ({
       }
       onKeyDown={
         !field.readonly && selected
-          ? updateFieldValue
+          ? updateDisplayValue
           : () => {
               console.log("can't edit readonly");
             }
       }
     >
-      {field.value ? field.value : ''}
+      {displayValue ? displayValue : ''}
     </Flex>
   );
 };
