@@ -43,6 +43,7 @@ const generateSudoku = () => {
         value,
         solution,
         readonly: value !== null,
+        given: value !== null,
       };
 
       board.push(field);

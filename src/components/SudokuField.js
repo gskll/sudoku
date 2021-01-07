@@ -5,16 +5,12 @@ import highlightRelevantFields from '../utils/highlightRelevantFields';
 import setFieldBackgroundColor from '../utils/setFieldBackgroundColor';
 import setFieldBorderColor from '../utils/setFieldBorderColor';
 
-import ReadOnlyField from './ReadOnlyField';
-
 // TODO: move field value state to SudokuField to flash incorrect, validate
 // then clear or not. Once validated, pass up to Board
 // TODO: flash green / red border on correct / incorrect guess
 // TODO: once correct guess, set to readonly / unchangeable
-// TODO: allow selection highlighting of readonly
 // TODO: update boardMapping with correct guess
 // TODO: update sameDigit highlighting on correct guess
-// TODO: remove readonly / editable field distinction
 
 const SudokuField = ({
   field,
@@ -57,22 +53,13 @@ const SudokuField = ({
     selectedField
   );
 
-  return field.readonly ? (
-    <ReadOnlyField
-      field={field}
-      showSolution={showSolution}
-      handleSetSelectedField={handleSetSelectedField}
-      background={fieldBackgroundColor}
-      borderColor={fieldBorderColor}
-      selected={selected}
-    />
-  ) : (
+  return (
     <Flex
       boxSize="90%"
       justify="center"
       align="center"
-      color="blue.900"
-      fontWeight={selected ? 'bold' : 'normal'}
+      color={field.given ? 'black' : 'blue.700'}
+      fontWeight="bold"
       background={fieldBackgroundColor}
       borderColor={fieldBorderColor}
       borderWidth={selected ? '3px' : '2px'}
@@ -83,7 +70,13 @@ const SudokuField = ({
       onMouseDown={
         showSolution ? undefined : () => handleSetSelectedField(field)
       }
-      onKeyDown={selected ? updateFieldValue : undefined}
+      onKeyDown={
+        !field.readonly && selected
+          ? updateFieldValue
+          : () => {
+              console.log("can't edit readonly");
+            }
+      }
     >
       {field.value ? field.value : ''}
     </Flex>

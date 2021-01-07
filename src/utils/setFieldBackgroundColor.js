@@ -28,7 +28,7 @@ const setFieldBackgroundColor = (field, selectedField) => {
     selectedField.sameDigitIndicesToHighlight.includes(field.index)
   ) {
     return 'orange.300';
-  } else if (field.readonly) {
+  } else if (field.given) {
     return 'gray.100';
   }
 };
