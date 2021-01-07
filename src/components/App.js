@@ -16,7 +16,10 @@ import { DownloadIcon, RepeatIcon } from '@chakra-ui/icons';
 // TODO: 3 wrong guesses max option
 // TODO: add difficulty parameter
 // TODO: check correctness of each move
-// TODO: add modal instruction on first visit
+// TODO: add modal instruction on help button: accordion menu
+//  - how to play
+//  - what happens if
+//  - what are the colors on the board?
 // TODO: save user stats in session
 
 const App = () => {

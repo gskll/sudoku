@@ -2,10 +2,12 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 
 const ReadOnlyField = ({
-  value,
-  setSelectedField,
+  field,
+  selected,
   background,
   borderColor,
+  showSolution,
+  handleSetSelectedField,
 }) => (
   <Flex
     boxSize="90%"
@@ -14,11 +16,11 @@ const ReadOnlyField = ({
     background={background}
     fontWeight="bold"
     borderColor={borderColor}
-    borderWidth="2px"
+    borderWidth={selected ? '3px' : '2px'}
     borderRadius="0.375em"
-    onClick={() => setSelectedField({})}
+    onMouseDown={showSolution ? undefined : () => handleSetSelectedField(field)}
   >
-    {value}
+    {field.value}
   </Flex>
 );
 

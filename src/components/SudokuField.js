@@ -10,6 +10,11 @@ import ReadOnlyField from './ReadOnlyField';
 // TODO: move field value state to SudokuField to flash incorrect, validate
 // then clear or not. Once validated, pass up to Board
 // TODO: flash green / red border on correct / incorrect guess
+// TODO: once correct guess, set to readonly / unchangeable
+// TODO: allow selection highlighting of readonly
+// TODO: update boardMapping with correct guess
+// TODO: update sameDigit highlighting on correct guess
+// TODO: remove readonly / editable field distinction
 
 const SudokuField = ({
   field,
@@ -54,10 +59,12 @@ const SudokuField = ({
 
   return field.readonly ? (
     <ReadOnlyField
-      value={field.value}
-      setSelectedField={setSelectedField}
+      field={field}
+      showSolution={showSolution}
+      handleSetSelectedField={handleSetSelectedField}
       background={fieldBackgroundColor}
       borderColor={fieldBorderColor}
+      selected={selected}
     />
   ) : (
     <Flex
