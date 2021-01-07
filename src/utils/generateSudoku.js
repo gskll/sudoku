@@ -20,12 +20,21 @@ const generateSudoku = () => {
   const solved = solvepuzzle(raw);
 
   const board = [];
+  const boardMapping = {};
 
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       const index = i * 9 + j;
       const value = raw[index] !== null ? raw[index] + 1 : null;
       const solution = solved[index] !== null ? solved[index] + 1 : null;
+
+      if (value) {
+        if (boardMapping[value]) {
+          boardMapping[value].push(index);
+        } else {
+          boardMapping[value] = [index];
+        }
+      }
 
       const field = {
         index,
@@ -40,7 +49,7 @@ const generateSudoku = () => {
     }
   }
 
-  return board;
+  return { board, boardMapping };
 };
 
 export default generateSudoku;
