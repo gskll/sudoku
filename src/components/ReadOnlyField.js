@@ -1,15 +1,16 @@
-import { Flex } from '@chakra-ui/react';
 import React from 'react';
+import { Flex } from '@chakra-ui/react';
 
-const ReadOnlyField = ({ value, background }) => (
+const ReadOnlyField = ({ value, setSelectedField, background }) => (
   <Flex
     boxSize="90%"
     align="center"
     justify="center"
-    bg={background}
+    background={background}
     fontWeight="bold"
     borderColor="gray.300"
     borderRadius="0.375em"
+    onClick={() => setSelectedField({})}
   >
     {value}
   </Flex>

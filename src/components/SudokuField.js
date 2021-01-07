@@ -7,6 +7,10 @@ import setFieldBorderColor from '../utils/setFieldBorderColor';
 
 import ReadOnlyField from './ReadOnlyField';
 
+// TODO: move field value state to SudokuField to flash incorrect, validate
+// then clear or not. Once validated, pass up to Board
+// TODO: flash green / red border on correct / incorrect guess
+
 const SudokuField = ({
   field,
   updateField,
@@ -18,7 +22,7 @@ const SudokuField = ({
     const value = event.key;
     const digitRegex = /[1-9]/;
 
-    if (value.match(digitRegex)) {
+    if (value.match(digitRegex) && field.solution === parseInt(value)) {
       updateField(field.index, value);
     }
   };
@@ -38,7 +42,11 @@ const SudokuField = ({
   const fieldBorderColor = setFieldBorderColor(field, selected, showSolution);
 
   return field.readonly ? (
-    <ReadOnlyField value={field.value} background={fieldBackgroundColor} />
+    <ReadOnlyField
+      value={field.value}
+      setSelectedField={setSelectedField}
+      background={fieldBackgroundColor}
+    />
   ) : (
     <Flex
       boxSize="90%"
