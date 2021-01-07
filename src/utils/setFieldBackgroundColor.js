@@ -20,9 +20,14 @@ const setFieldBackgroundColor = (field, selectedField) => {
     return;
   } else if (
     selectedField.field &&
-    selectedField.indicesToHighlight.includes(field.index)
+    selectedField.gridIndicesToHighlight.includes(field.index)
   ) {
     return 'orange.100';
+  } else if (
+    selectedField.sameDigitIndicesToHighlight &&
+    selectedField.sameDigitIndicesToHighlight.includes(field.index)
+  ) {
+    return 'orange.300';
   } else if (field.readonly) {
     return 'gray.100';
   }

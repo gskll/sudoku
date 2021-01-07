@@ -12,7 +12,7 @@
  * - borderColor: string
  */
 
-const setFieldBorderColor = (field, selected, showSolution) => {
+const setFieldBorderColor = (field, selected, showSolution, selectedField) => {
   if (showSolution) {
     if (field.lastGuess === field.solution) {
       return 'green.300';
@@ -21,6 +21,11 @@ const setFieldBorderColor = (field, selected, showSolution) => {
     }
   } else if (selected) {
     return 'blue.500';
+  } else if (
+    selectedField.sameDigitIndicesToHighlight &&
+    selectedField.sameDigitIndicesToHighlight.includes(field.index)
+  ) {
+    return 'orange.300';
   } else {
     return 'gray.300';
   }
