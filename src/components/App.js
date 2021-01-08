@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import {
-  Button,
-  ButtonGroup,
-  ChakraProvider,
-  Flex,
-  Heading,
-} from '@chakra-ui/react';
+import { ChakraProvider, Flex, Heading } from '@chakra-ui/react';
 
 import generateSudoku from '../utils/generateSudoku';
 
 import SudokuBoard from './SudokuBoard';
-import { DownloadIcon, RepeatIcon } from '@chakra-ui/icons';
+import BoardButtons from './BoardButtons';
 
 // TODO: refactor to use useEffect where appropriate
 // TODO: refactor Chakra style components into separate components
@@ -43,24 +37,11 @@ const App = () => {
           Sweeeeeet Sudoku
         </Heading>
         <SudokuBoard sudokuBoard={sudokuBoard} showSolution={showSolution} />
-        <ButtonGroup spacing="6" m="3vh auto">
-          <Button
-            onClick={() => setShowSolution(true)}
-            disabled={showSolution}
-            leftIcon={<DownloadIcon />}
-            colorScheme="blue"
-          >
-            Show Solution
-          </Button>
-          <Button
-            onClick={resetNewBoard}
-            leftIcon={<RepeatIcon />}
-            colorScheme="blue"
-            variant="outline"
-          >
-            Play Again
-          </Button>
-        </ButtonGroup>
+        <BoardButtons
+          showSolution={showSolution}
+          setShowSolution={setShowSolution}
+          resetNewBoard={resetNewBoard}
+        />
       </Flex>
     </ChakraProvider>
   );
