@@ -5,23 +5,16 @@ import checkSubGridBorder from '../utils/checkSubGridBorder';
 import checkSolvedBoard from '../utils/checkSolvedBoard';
 import highlightRelevantFields from '../utils/highlightRelevantFields';
 
+import useBoardRef from '../hooks/useBoardRef';
+
 import SudokuField from './SudokuField';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
+  const boardRef = useRef();
   const [sudoku, setSudoku] = useState([]);
   const [sudokuMap, setSudokuMap] = useState({});
   const [selectedField, setSelectedField] = useState({});
   const [notEditableErrorShown, setNotEditableErrorShown] = useState(false);
-
-  ///////////////// HANDLE ALL FIELD DESELECT ON CLICK OUTSIDE BOARD
-
-  // Use a ref to handle UX bug where field stays selected
-  // when click outside of the board
-
-  // Attach a ref to the board, with event handlers to setSelectedField to null
-  // if the click is outside of the board
-
-  const boardRef = useRef();
 
   const onBodyClick = event => {
     if (boardRef.current && boardRef.current.contains(event.target)) {
@@ -30,17 +23,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     setSelectedField({});
   };
 
-  useEffect(() => {
-    document.body.addEventListener('click', onBodyClick, { capture: true });
-
-    return () => {
-      document.body.removeEventListener('click', onBodyClick, {
-        capture: true,
-      });
-    };
-  }, []);
-
-  /////////////// END OF DESELECT ON OUTSIDE BOARD CLICK HANDLING
+  useBoardRef(onBodyClick);
 
   useEffect(() => {
     setSudoku(sudokuBoard.board);
