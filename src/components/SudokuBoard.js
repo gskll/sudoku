@@ -5,48 +5,39 @@ import checkSubGridBorder from '../utils/checkSubGridBorder';
 import checkSolvedBoard from '../utils/checkSolvedBoard';
 import highlightRelevantFields from '../utils/highlightRelevantFields';
 
-import useBoardRef from '../hooks/useBoardRef';
-
 import SudokuField from './SudokuField';
+
+import useBoardRef from '../hooks/useBoardRef';
+import useSolveBoard from '../hooks/useSolveBoard';
 
 const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const boardRef = useRef();
+
   const [sudoku, setSudoku] = useState([]);
   const [sudokuMap, setSudokuMap] = useState({});
+
   const [selectedField, setSelectedField] = useState({});
+
   const [notEditableErrorShown, setNotEditableErrorShown] = useState(false);
 
   // Add event handler to deselect board fields on body click
   useBoardRef(boardRef, setSelectedField);
 
+  // Handle logic when board is solved
+  // When showSolution changes
+  const solveBoard = useSolveBoard(
+    showSolution,
+    sudoku,
+    sudokuMap,
+    setSudokuMap,
+    setSudoku,
+    setSelectedField
+  );
+
   useEffect(() => {
     setSudoku(sudokuBoard.board);
     setSudokuMap(sudokuBoard.boardMapping);
   }, [sudokuBoard]);
-
-  useEffect(() => {
-    if (showSolution) {
-      handleBoardSolved();
-    }
-  }, [showSolution]);
-
-  const handleBoardSolved = () => {
-    const tempBoardMap = sudokuMap;
-
-    const solvedBoard = sudoku.map(field => {
-      if (field.readonly) {
-        return field;
-      }
-
-      const mapKey = parseInt(field.solution);
-      tempBoardMap[mapKey].push(field.index);
-      return { ...field, value: field.solution, readonly: true };
-    });
-
-    setSudokuMap(tempBoardMap);
-    setSudoku(solvedBoard);
-    setSelectedField({});
-  };
 
   const handleSetSelectedField = field => {
     const { index, row, col, value } = field;
@@ -83,7 +74,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     handleSetSelectedField(board[index]);
     const solved = checkSolvedBoard(board);
 
-    solved ? handleBoardSolved() : setSudoku(board);
+    solved ? solveBoard() : setSudoku(board);
   };
 
   const renderBoardField = field => {
