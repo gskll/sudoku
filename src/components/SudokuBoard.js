@@ -16,14 +16,8 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   const [selectedField, setSelectedField] = useState({});
   const [notEditableErrorShown, setNotEditableErrorShown] = useState(false);
 
-  const onBodyClick = event => {
-    if (boardRef.current && boardRef.current.contains(event.target)) {
-      return;
-    }
-    setSelectedField({});
-  };
-
-  useBoardRef(onBodyClick);
+  // Add event handler to deselect board fields on body click
+  useBoardRef(boardRef, setSelectedField);
 
   useEffect(() => {
     setSudoku(sudokuBoard.board);

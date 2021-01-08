@@ -1,20 +1,27 @@
 /*
-  Use a ref to handle UX bug where field stays selected
-    when click outside of the board
-
-  Attach a ref to the board, with event handlers to
-    setSelectedField to null if the click is outside
-    of the board
+ * Deselect all board fields when click outside of board
+ *
+ * Pass ref to board grid
+ * Attach event handler on body click
+ * Remove event handler when on cleanup
+ * On body click: remove selected if click outside of board
  */
 
 import { useEffect } from 'react';
 
-const useBoardRef = callback => {
+const useBoardRef = (ref, setSelectedField) => {
+  const onBodyClick = event => {
+    if (ref.current && ref.current.contains(event.target)) {
+      return;
+    }
+    setSelectedField({});
+  };
+
   useEffect(() => {
-    document.body.addEventListener('click', callback, { capture: true });
+    document.body.addEventListener('click', onBodyClick, { capture: true });
 
     return () => {
-      document.body.removeEventListener('click', callback, {
+      document.body.removeEventListener('click', onBodyClick, {
         capture: true,
       });
     };
