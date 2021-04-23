@@ -7,9 +7,6 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 import BoardButtons from './BoardButtons';
 
-// TODO: refactor to use useEffect where appropriate
-// TODO: refactor Chakra style components into separate components
-// TODO: refactor app buttons
 
 const App = () => {
   const [sudokuBoard, setSudokuBoard] = useState({});

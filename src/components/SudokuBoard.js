@@ -110,7 +110,9 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   return (
     <Grid
       ref={boardRef}
-      boxSize={{ sm: '80vw', lg: '80vh' }}
+      w={['80vw', '70vh']}
+      h={['100%', '70vh']}
+      maxH={['100vw', '100%']}
       templateColumns="repeat(9, 1fr)"
       templateRows="repeat(9, 1fr)"
       m={15}
