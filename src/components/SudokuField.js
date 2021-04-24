@@ -42,7 +42,7 @@ const SudokuField = ({
         setFieldEditable(true);
       }, FLASH_TIMER);
     }
-  }, [displayValue]);
+  }, [displayValue, updateField, field]);
 
   const updateDisplayValue = event => {
     const value = event.key;
