@@ -10,14 +10,14 @@
 import { useEffect } from 'react';
 
 const useBoardRef = (ref, setSelectedField) => {
-  const onBodyClick = event => {
+  useEffect(() => {
+    const onBodyClick = event => {
     if (ref.current && ref.current.contains(event.target)) {
       return;
     }
     setSelectedField({});
   };
-
-  useEffect(() => {
+  
     document.body.addEventListener('click', onBodyClick, { capture: true });
 
     return () => {
@@ -25,7 +25,7 @@ const useBoardRef = (ref, setSelectedField) => {
         capture: true,
       });
     };
-  }, []);
+  }, [ref, setSelectedField]);
 };
 
 export default useBoardRef;
