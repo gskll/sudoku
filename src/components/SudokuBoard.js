@@ -63,32 +63,38 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   };
 
   // Add new correct value to board map of indices
-  const handleMapUpdate = (index, value) => {
-    value = parseInt(value);
+  const handleMapUpdate = useCallback(
+    (index, value) => {
+      value = parseInt(value);
 
-    const map = {
-      ...sudokuMap,
-      [value]: [...sudokuMap[value], index],
-    };
+      const map = {
+        ...sudokuMap,
+        [value]: [...sudokuMap[value], index],
+      };
 
-    setSudokuMap(map);
-  };
+      setSudokuMap(map);
+    },
+    [sudokuMap]
+  );
 
   // Update board and map with new correct value
-  const updateField = (index, updatedValue) => {
-    updatedValue = parseInt(updatedValue);
-    const board = sudoku.map(field =>
-      field.index === index
-        ? { ...field, value: updatedValue, readonly: true }
-        : field
-    );
+  const updateField = useCallback(
+    (index, updatedValue) => {
+      updatedValue = parseInt(updatedValue);
+      const board = sudoku.map(field =>
+        field.index === index
+          ? { ...field, value: updatedValue, readonly: true }
+          : field
+      );
 
-    handleMapUpdate(index, updatedValue);
-    // handleSetSelectedField(board[index]);
-    const solved = checkSolvedBoard(board);
+      handleMapUpdate(index, updatedValue);
+      // handleSetSelectedField(board[index]);
+      const solved = checkSolvedBoard(board);
 
-    solved ? handleSolvedBoard() : setSudoku(board);
-  };
+      solved ? handleSolvedBoard() : setSudoku(board);
+    },
+    [sudoku, handleMapUpdate, handleSolvedBoard]
+  );
 
   const renderBoardField = field => {
     const border = checkSubGridBorder(field);
