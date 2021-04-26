@@ -15,7 +15,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
 
   const [sudoku, setSudoku] = useState([]);
   const [sudokuMap, setSudokuMap] = useState({});
-  const [boardSolved, setBoardSolved] = useState(false)
+  const [boardSolved, setBoardSolved] = useState(false);
 
   const [selectedField, setSelectedField] = useState({});
 
@@ -24,35 +24,34 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
   // Add event handler to deselect board fields on body click
   useBoardRef(boardRef, setSelectedField);
 
-  // Update board and board map with correct solutions
-  const handleSolvedBoard = useCallback(
-    () => {
-      const solvedBoard = solveBoard(sudoku, sudokuMap)
-      setSudoku(solvedBoard.solvedBoard)
-      setSudokuMap(solvedBoard.solvedBoardMap)
-    }, [sudoku, sudokuMap])
-
   // Set initial state when new sudokuBoard comes in
   useEffect(() => {
     setSudoku(sudokuBoard.board);
     setSudokuMap(sudokuBoard.boardMapping);
-    setBoardSolved(false)
+    setBoardSolved(false);
   }, [sudokuBoard]);
+
+  // Update board and board map with correct solutions
+  const handleSolvedBoard = useCallback(() => {
+    const solvedBoard = solveBoard(sudoku, sudokuMap);
+    setSudoku(solvedBoard.solvedBoard);
+    setSudokuMap(solvedBoard.solvedBoardMap);
+  }, [sudoku, sudokuMap]);
 
   // Solve board when showSolution changes
   useEffect(() => {
     if (showSolution && !boardSolved) {
-      handleSolvedBoard()
-      setBoardSolved(true)
+      handleSolvedBoard();
+      setBoardSolved(true);
     }
-  }, [showSolution, handleSolvedBoard, boardSolved])
+  }, [showSolution, handleSolvedBoard, boardSolved]);
 
   const handleSetSelectedField = field => {
     const { index, row, col, value } = field;
 
     // Get indices of selected field's row, column, sub-grid
     const gridIndicesToHighlight = highlightRelevantFields(index, row, col);
-    
+
     // Get indices of the other fields with the same value as the selected field
     const sameDigitIndicesToHighlight = sudokuMap[parseInt(value)];
 
@@ -85,7 +84,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
     );
 
     handleMapUpdate(index, updatedValue);
-    handleSetSelectedField(board[index]);
+    // handleSetSelectedField(board[index]);
     const solved = checkSolvedBoard(board);
 
     solved ? handleSolvedBoard() : setSudoku(board);
@@ -99,7 +98,7 @@ const SudokuBoard = ({ sudokuBoard, showSolution }) => {
         <SudokuField
           field={field}
           updateField={updateField}
-          key={field.index * 2}
+          key={field.index * 20}
           selectedField={selectedField}
           handleSetSelectedField={handleSetSelectedField}
           notEditableErrorShown={notEditableErrorShown}

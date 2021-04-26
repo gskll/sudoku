@@ -7,7 +7,6 @@ import generateSudoku from '../utils/generateSudoku';
 import SudokuBoard from './SudokuBoard';
 import BoardButtons from './BoardButtons';
 
-
 const App = () => {
   const [sudokuBoard, setSudokuBoard] = useState({});
   const [showSolution, setShowSolution] = useState(false);

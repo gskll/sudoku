@@ -27,7 +27,17 @@ const generateSudoku = () => {
   const solved = solvepuzzle(raw);
 
   const board = [];
-  const boardMapping = {1:[], 2: [], 3: [], 4: [], 5: [], 6:[], 7:[], 8:[], 9:[]};
+  const boardMapping = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+  };
 
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
@@ -36,11 +46,7 @@ const generateSudoku = () => {
       const solution = solved[index] !== null ? solved[index] + 1 : null;
 
       if (value) {
-        // if (boardMapping[value]) {
-          boardMapping[value].push(index);
-        // } else {
-        //   boardMapping[value] = [index];
-        // }
+        boardMapping[value].push(index);
       }
 
       const field = {

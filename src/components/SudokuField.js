@@ -17,32 +17,37 @@ const SudokuField = ({
   const [fieldFlash, setFieldFlash] = useState(null);
   const [fieldEditable, setFieldEditable] = useState(true);
 
+  // Display field value
   useEffect(() => {
     setDisplayValue(field.value);
-  }, [field.value]);
+  }, [field]);
 
+  // Handle field update
   useEffect(() => {
     if (field.readonly || !displayValue) {
       return;
     }
+
     setFieldEditable(false);
 
     if (field.solution === parseInt(displayValue)) {
       setFieldFlash({ border: 'green.300', bg: 'green.100' });
       updateField(field.index, displayValue);
+
       setTimeout(() => {
         setFieldFlash(null);
         setFieldEditable(true);
       }, FLASH_TIMER);
     } else {
       setFieldFlash({ border: 'red.300', bg: 'red.100' });
+
       setTimeout(() => {
         setFieldFlash(null);
         setDisplayValue(null);
         setFieldEditable(true);
       }, FLASH_TIMER);
     }
-  }, [displayValue, updateField, field]);
+  }, [field, displayValue, updateField]);
 
   const updateDisplayValue = event => {
     const value = event.key;
