@@ -90,19 +90,19 @@ src/
 
 ## Screenshots
 
-<img src="/Users/andrew/Library/Application Support/typora-user-images/image-20210426111346964.png" alt="image-20210426111346964" style="zoom:50%;" />
+<img src="/Users/andrew/cs/sudoku/screenshots/image-20210426111346964.png" alt="image-20210426111346964" style="zoom:50%;" />
 
 
 
-<img src="/Users/andrew/Library/Application Support/typora-user-images/image-20210426111429626.png" alt="image-20210426111429626" style="zoom:50%;" />
+<img src="/Users/andrew/cs/sudoku/screenshots/image-20210426111429626.png" alt="image-20210426111429626" style="zoom:50%;" />
 
-<img src="/Users/andrew/Library/Application Support/typora-user-images/image-20210426111620115.png" alt="image-20210426111620115" style="zoom:50%;" />
+<img src="/Users/andrew/cs/sudoku/screenshots/image-20210426111620115.png" alt="image-20210426111620115" style="zoom:50%;" />
 
-<img src="/Users/andrew/Desktop/Screenshot 2021-04-26 at 11.14.57.png" alt="Screenshot 2021-04-26 at 11.14.57" style="zoom:50%;" />
+<img src="/Users/andrew/cs/sudoku/screenshots/Screenshot 2021-04-26 at 11.14.57.png" alt="Screenshot 2021-04-26 at 11.14.57" style="zoom:50%;" />
 
-<img src="/Users/andrew/Desktop/Screenshot 2021-04-26 at 11.23.22.png" alt="Screenshot 2021-04-26 at 11.23.22" style="zoom:50%;" />
+<img src="/Users/andrew/cs/sudoku/screenshots/Screenshot 2021-04-26 at 11.23.22.png" alt="Screenshot 2021-04-26 at 11.23.22" style="zoom:50%;" />
 
-<img src="/Users/andrew/Library/Application Support/typora-user-images/image-20210426112449176.png" alt="image-20210426112449176" style="zoom:50%;" />
+<img src="/Users/andrew/cs/sudoku/screenshots/image-20210426112449176.png" alt="image-20210426112449176" style="zoom:50%;" />
 
 ## Improvements
 
