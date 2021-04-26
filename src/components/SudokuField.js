@@ -23,16 +23,16 @@ const SudokuField = ({
   }, [field]);
 
   // Handle field update
-  useEffect(() => {
-    if (field.readonly || !displayValue) {
+  const handleFieldUpdate = value => {
+    if (field.readonly || !value) {
       return;
     }
 
     setFieldEditable(false);
 
-    if (field.solution === parseInt(displayValue)) {
+    if (field.solution === parseInt(value)) {
       setFieldFlash({ border: 'green.300', bg: 'green.100' });
-      updateField(field.index, displayValue);
+      updateField(field.index, value);
 
       setTimeout(() => {
         setFieldFlash(null);
@@ -47,7 +47,7 @@ const SudokuField = ({
         setFieldEditable(true);
       }, FLASH_TIMER);
     }
-  }, [field, displayValue, updateField]);
+  };
 
   const updateDisplayValue = event => {
     const value = event.key;
@@ -55,6 +55,7 @@ const SudokuField = ({
 
     if (value.match(validValue)) {
       setDisplayValue(value);
+      handleFieldUpdate(value);
     }
   };
 
